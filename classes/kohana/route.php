@@ -38,6 +38,9 @@ class Kohana_Route {
 	// Defines the pattern of a <segment>
 	const REGEX_KEY     = '<([a-zA-Z0-9_]++)>';
 
+	// Defines the pattern of a <segment:regex>
+	const REGEX_INLINE  = '<([a-zA-Z0-9_]++):(.+?)>';
+
 	// What can be part of a <segment> value
 	const REGEX_SEGMENT = '[^/.,;?\n]++';
 
@@ -204,6 +207,26 @@ class Kohana_Route {
 		{
 			// Assume the route is from cache
 			return;
+		}
+
+		// Find inline regex and remove it
+		if (preg_match_all('#'.Route::REGEX_INLINE.'#', $uri, $matches, PREG_SET_ORDER))
+		{
+			$replace = array();
+
+			foreach ($matches as $match)
+			{
+				list($search, $segment, $exp) = $match;
+
+				// Add the regex for this segment
+				$regex[$segment] = $exp;
+
+				// Add the replacment for this segment
+				$replace[$search] = '<'.$segment.'>';
+			}
+
+			// Remove all inline regex
+			$uri = strtr($uri, $replace);
 		}
 
 		if ( ! empty($regex))
