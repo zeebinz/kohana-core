@@ -59,10 +59,10 @@ class Kohana_Debug {
 	 * @param   mixed    variable to dump
 	 * @param   integer  maximum length of strings
 	 * @param   integer  recursion limit
-	 * @param   integer  recursion level (internal)
+	 * @param   integer  current recursion level (internal usage only!)
 	 * @return  string
 	 */
-	protected static function _dump( & $var, $length = 128, $level_recursion = 10, $level_current = 0)
+	protected static function _dump( & $var, $length = 128, $limit = 10, $level = 0)
 	{
 		if ($var === NULL)
 		{
@@ -128,7 +128,7 @@ class Kohana_Debug {
 			$output = array();
 
 			// Indentation for this variable
-			$space = str_repeat($s = '    ', $level_current);
+			$space = str_repeat($s = '    ', $level);
 
 			static $marker;
 
@@ -146,7 +146,7 @@ class Kohana_Debug {
 			{
 				$output[] = "(\n$space$s*RECURSION*\n$space)";
 			}
-			elseif ($level_current < $level_recursion)
+			elseif ($level < $limit)
 			{
 				$output[] = "<span>(";
 
@@ -159,7 +159,7 @@ class Kohana_Debug {
 						$key = '"'.htmlspecialchars($key, ENT_NOQUOTES, Kohana::$charset).'"';
 					}
 
-					$output[] = "$space$s$key => ".Debug::_dump($val, $length, $level_recursion, $level_current + 1);
+					$output[] = "$space$s$key => ".Debug::_dump($val, $length, $limit, $level + 1);
 				}
 				unset($var[$marker]);
 
@@ -181,7 +181,7 @@ class Kohana_Debug {
 			$output = array();
 
 			// Indentation for this variable
-			$space = str_repeat($s = '    ', $level_current);
+			$space = str_repeat($s = '    ', $level);
 
 			$hash = spl_object_hash($var);
 
@@ -196,7 +196,7 @@ class Kohana_Debug {
 			{
 				$output[] = "{\n$space$s*RECURSION*\n$space}";
 			}
-			elseif ($level_current < $level_recursion)
+			elseif ($level < $limit)
 			{
 				$output[] = "<code>{";
 
@@ -216,7 +216,7 @@ class Kohana_Debug {
 						$access = '<small>public</small>';
 					}
 
-					$output[] = "$space$s$access $key => ".Debug::_dump($val, $length, $level_recursion, $level_current + 1);
+					$output[] = "$space$s$access $key => ".Debug::_dump($val, $length, $limit, $level + 1);
 				}
 				unset($objects[$hash]);
 
