@@ -77,7 +77,7 @@ class Kohana_Request_Client_Curl extends Request_Client_External {
 		$options += $this->_options;
 
 		// Open a new remote connection
-		$curl = curl_init($request->uri());
+		$curl = curl_init($request->uri(NULL, TRUE));
 
 		// Set connection options
 		if ( ! curl_setopt_array($curl, $options))

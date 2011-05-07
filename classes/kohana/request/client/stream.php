@@ -57,7 +57,7 @@ class Kohana_Request_Client_Stream extends Request_Client_External {
 
 		stream_context_set_option($context, $this->_options);
 
-		$stream = fopen($request->uri(), $mode, FALSE, $context);
+		$stream = fopen($request->uri(NULL, TRUE), $mode, FALSE, $context);
 
 		$meta_data = stream_get_meta_data($stream);
 

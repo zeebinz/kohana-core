@@ -835,10 +835,11 @@ class Kohana_Request implements HTTP_Request {
 	 *     $request->uri($params);
 	 *
 	 * @param   array   $params  Additional route parameters
+	 * @param   boolean  include the query string in the uri
 	 * @return  string
 	 * @uses    Route::uri
 	 */
-	public function uri(array $params = NULL)
+	public function uri(array $params = NULL, $query = FALSE)
 	{
 		if ( ! isset($params['directory']))
 		{
@@ -863,33 +864,29 @@ class Kohana_Request implements HTTP_Request {
 
 		$uri = $this->_route->uri($params);
 
-		if ( ! $query = $this->query())
+		// If there is no query, or the query is empty
+		if ( ! $query OR ! ($query = $this->query()))
 			return $uri;
 		else
 			return $uri . '?' . http_build_query($query, NULL, '&');
-
 	}
 
 	/**
 	 * Create a URL from the current request. This is a shortcut for:
 	 *
-	 *     echo URL::site($this->request->uri($params), $protocol);
+	 *     echo URL::site($this->request->uri($params, FALSE), $protocol);
 	 *
 	 * @param   array    $params    URI parameters
 	 * @param   mixed    $protocol  protocol string or Request object
+	 * @param   boolean  include the query string in the url
 	 * @return  string
 	 * @since   3.0.7
 	 * @uses    URL::site
 	 */
-	public function url(array $params = NULL, $protocol = NULL)
+	public function url(array $params = NULL, $protocol = NULL, $query = FALSE)
 	{
 		// Create a URI with the current route and convert it to a URL
-		$url = URL::site($this->uri($params), $protocol);
-
-		if ( ! $query = $this->query())
-			return $url;
-		else
-			return $url . '?' . http_build_query($query, NULL, '&');
+		return URL::site($this->uri($params, $query), $protocol);
 	}
 
 	/**
@@ -1434,7 +1431,7 @@ class Kohana_Request implements HTTP_Request {
 			$this->_header['cookie'] = implode('; ', $cookie_string);
 		}
 
-		$output = $this->method().' '.$this->uri($this->param()).' '.strtoupper($this->protocol()).'/'.HTTP::$version."\n";
+		$output = $this->method().' '.$this->uri($this->param(), TRUE).' '.strtoupper($this->protocol()).'/'.HTTP::$version."\n";
 		$output .= (string) $this->_header;
 		$output .= $body;
 
