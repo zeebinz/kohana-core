@@ -41,11 +41,26 @@ class Kohana_Request_Client_Curl extends Request_Client_External {
 		// Set the request method
 		$options[CURLOPT_CUSTOMREQUEST] = $request->method();
 
-		// Set the request body. This is perfectly legal in CURL even
-		// if using a request other than POST. PUT does support this method
-		// and DOES NOT require writing data to disk before putting it, if
-		// reading the PHP docs you may have got that impression. SdF
-		$options[CURLOPT_POSTFIELDS] = $request->body();
+		$body = $request->body();
+
+		if (is_resource($body))
+		{
+			$options[CURLOPT_PUT]    = TRUE;
+			$options[CURLOPT_INFILE] = $body;
+
+			if ($length = $request->headers('Content-Length') !== NULL)
+			{
+				$options[CURLOPT_INFILESIZE] = $length;
+			}
+		}
+		else
+		{
+			// Set the request body. This is perfectly legal in CURL even
+			// if using a request other than POST. PUT does support this method
+			// and DOES NOT require writing data to disk before putting it, if
+			// reading the PHP docs you may have got that impression. SdF
+			$options[CURLOPT_POSTFIELDS] = $body;
+		}
 
 		// Process headers
 		if ($headers = $request->headers())
