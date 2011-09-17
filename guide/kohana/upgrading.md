@@ -14,7 +14,7 @@ In other respects, the majority of the public API should still operate in the sa
 A simple find/replace for `Kohana::config`/`Kohana::$config->load` within your project should fix this.
 
 The terminology for config sources has also changed.  Pre 3.2 config was loaded from "Config Readers" which both
-read and wrote config.  In 3.2 there are **Config Readers** and **Config Writers**, both of which are a type of 
+read and wrote config.  In 3.2 there are **Config Readers** and **Config Writers**, both of which are a type of
 **Config Source**.
 
 A **Config Reader** is implemented by implementing the `Kohana_Config_Reader` interface; similarly a **Config Writer**
@@ -71,7 +71,7 @@ In Kohana 3.1, HTTP caching was enabled doing the following;
 
     // In controller, ensure response sets cache control,
     // this will cache the response for one hour
-    $this->response->headers('cache-control', 
+    $this->response->headers('cache-control',
         'public, max-age=3600');
 
 In Kohana 3.2, HTTP caching is enabled slightly differently;
@@ -82,7 +82,7 @@ In Kohana 3.2, HTTP caching is enabled slightly differently;
 
     // In controller, ensure response sets cache control,
     // this will cache the response for one hour
-    $this->response->headers('cache-control', 
+    $this->response->headers('cache-control',
         'public, max-age=3600');
 
 ## Controller Action Parameters
@@ -106,3 +106,7 @@ You'll need to change it to:
 ## Form Class
 
 If you used Form::open(), the default behavior has changed. It used to default to "/" (your home page), but now an empty parameter will default to the current URI.
+
+## Reverse Routing
+
+The bahavior of `Request::uri()` was changed. It will now simply return the current URL of the request. There is no longer a convenience method for generating a URI based on the current request.
