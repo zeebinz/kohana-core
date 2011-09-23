@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * [Request_Client_External] provides a wrapper for all external request
  * processing. This class should be extended by all drivers handling external
@@ -197,7 +197,7 @@ abstract class Kohana_Request_Client_External extends Request_Client {
 	 * Sends the HTTP message [Request] to a remote server and processes
 	 * the response.
 	 *
-	 * @param   Request $request    request to send
+	 * @param   Request  $request  Request to execute
 	 * @return  Response
 	 */
 	abstract protected function _send_message(Request $request);

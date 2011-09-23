@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * The Kohana_HTTP_Header class provides an Object-Orientated interface
  * to HTTP headers. This can parse header arrays returned from the
@@ -457,13 +457,13 @@ class Kohana_HTTP_Header extends ArrayObject {
 	 * request `Accept:` header. If the `$explicit` argument is `TRUE`,
 	 * only precise matches will be returned, excluding all wildcard (`*`)
 	 * directives.
-	 * 
+	 *
 	 *     // Accept: application/xml; application/json; q=.5; text/html; q=.2, text/*
 	 *     // Accept quality for application/json
-	 * 
+	 *
 	 *     // $quality = 0.5
 	 *     $quality = $request->headers()->accepts_at_quality('application/json');
-	 * 
+	 *
 	 *     // $quality_explicit = FALSE
 	 *     $quality_explicit = $request->headers()->accepts_at_quality('text/plain', TRUE);
 	 *

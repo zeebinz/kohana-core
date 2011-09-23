@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Routes are used to determine the controller and action for a requested URI.
  * Every route generates a regular expression which is used to match a URI
@@ -344,7 +344,7 @@ class Kohana_Route {
 	 * If no parameter is passed, this method will act as a getter.
 	 *
 	 * @param   array   $defaults   key values
-	 * @return  $this or array
+	 * @return  $this|array
 	 */
 	public function defaults(array $defaults = NULL)
 	{

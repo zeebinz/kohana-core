@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Contains debugging and dumping tools.
  *
@@ -42,9 +42,9 @@ class Kohana_Debug {
 	 *
 	 * Borrows heavily on concepts from the Debug class of [Nette](http://nettephp.com/).
 	 *
-	 * @param   mixed   $value              variable to dump
-	 * @param   integer $length             maximum length of strings
-	 * @param   integer $level_recursion    recursion limit
+	 * @param   mixed    $value              variable to dump
+	 * @param   integer  $length             maximum length of strings
+	 * @param   integer  $level_recursion    recursion limit
 	 * @return  string
 	 */
 	public static function dump($value, $length = 128, $level_recursion = 10)
@@ -55,10 +55,10 @@ class Kohana_Debug {
 	/**
 	 * Helper for Debug::dump(), handles recursion in arrays and objects.
 	 *
-	 * @param   mixed   $var    variable to dump
-	 * @param   integer $length maximum length of strings
-	 * @param   integer $limit  recursion limit
-	 * @param   integer $level  current recursion level (internal usage only!)
+	 * @param   mixed    $var    variable to dump
+	 * @param   integer  $length maximum length of strings
+	 * @param   integer  $limit  recursion limit
+	 * @param   integer  $level  current recursion level (internal usage only!)
 	 * @return  string
 	 */
 	protected static function _dump( & $var, $length = 128, $limit = 10, $level = 0)
