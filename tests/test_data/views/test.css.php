@@ -1,1 +1,1 @@
-This is a view with a dot in the filename.
+<?php // This is a view with a dot in the filename.
